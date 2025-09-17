@@ -3,24 +3,110 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
+  --primary: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --secondary: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --success: #22c55e;
+  
+  /* Tailwind CSS custom properties */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-success: var(--success);
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  
+  /* High contrast colors for accessibility */
+  --color-contrast-high: #000000;
+  --color-contrast-medium: #374151;
+  --color-contrast-low: #9ca3af;
+  
+  /* Touch-friendly sizing */
+  --touch-target: 44px;
+  --border-radius: 8px;
+  
+  /* Custom breakpoints for rural devices */
+  --screen-xs: 360px;
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --foreground: #f8fafc;
+    --primary: #60a5fa;
+    --primary-dark: #3b82f6;
+    --secondary: #34d399;
+    --contrast-high: #ffffff;
+    --contrast-medium: #e2e8f0;
+    --contrast-low: #64748b;
   }
+}
+
+/* Base styles for accessibility */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Button and interactive element styles */
+button, a, [role="button"] {
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+  touch-action: manipulation;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --background: #ffffff;
+    --foreground: #000000;
+    --primary: #0000ff;
+    --secondary: #008000;
+  }
+}
+
+/* Loading and offline states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.offline {
+  filter: grayscale(1);
 }
