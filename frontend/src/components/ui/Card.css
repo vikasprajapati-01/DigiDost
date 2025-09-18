@@ -1,0 +1,197 @@
+/* Card Component Styles */
+
+.card {
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(229, 231, 235);
+  transition: all 0.2s ease-in-out;
+}
+
+.card.dark {
+  background: rgb(31, 41, 55);
+  border-color: rgb(75, 85, 99);
+}
+
+.card.hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Padding variants */
+.card.paddingNone {
+  padding: 0;
+}
+
+.card.paddingSm {
+  padding: 1rem;
+}
+
+.card.paddingMd {
+  padding: 1.5rem;
+}
+
+.card.paddingLg {
+  padding: 2rem;
+}
+
+/* Shadow variants */
+.card.shadowNone {
+  box-shadow: none;
+}
+
+.card.shadowSm {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.card.shadowMd {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.card.shadowLg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Card content styles */
+.cardTitle {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: rgb(17, 24, 39);
+  margin: 0;
+}
+
+.cardDescription {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(75, 85, 99);
+  margin: 0;
+}
+
+.cardContent {
+  padding-top: 0;
+}
+
+/* Card sections */
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1.5rem;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  padding-top: 1rem;
+}
+
+/* XP Card specific styles */
+.xpCard {
+  background: linear-gradient(to bottom right, #eff6ff, #e0e7ff);
+}
+
+.xpCardTitle {
+  color: #1e3a8a;
+}
+
+.xpProgressContainer {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.75rem;
+}
+
+.xpProgressBar {
+  background: linear-gradient(to right, #3b82f6, #4f46e5);
+  height: 0.75rem;
+  border-radius: 9999px;
+  transition: all 0.5s ease;
+}
+
+/* Stat Card specific styles */
+.statCard {
+  background: linear-gradient(to bottom right, var(--from-color), var(--to-color));
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+/* Stat Card color variants */
+.statCard.blue {
+  --from-color: #eff6ff;
+  --to-color: #dbeafe;
+  --text-color: #1e3a8a;
+  --border-color: #bfdbfe;
+}
+
+.statCard.green {
+  --from-color: #f0fdf4;
+  --to-color: #dcfce7;
+  --text-color: #14532d;
+  --border-color: #bbf7d0;
+}
+
+.statCard.purple {
+  --from-color: #faf5ff;
+  --to-color: #f3e8ff;
+  --text-color: #581c87;
+  --border-color: #d8b4fe;
+}
+
+.statCard.yellow {
+  --from-color: #fefce8;
+  --to-color: #fef3c7;
+  --text-color: #92400e;
+  --border-color: #fde68a;
+}
+
+.statCard.red {
+  --from-color: #fef2f2;
+  --to-color: #fecaca;
+  --text-color: #991b1b;
+  --border-color: #fca5a5;
+}
+
+.statCardContent {
+  padding: 1rem;
+}
+
+.statCardLayout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statCardText {
+  flex: 1;
+}
+
+.statCardTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.statCardValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.statCardTrend {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.statCardTrend.positive {
+  color: #16a34a;
+}
+
+.statCardTrend.negative {
+  color: #dc2626;
+}
+
+.statCardIcon {
+  opacity: 0.7;
+}

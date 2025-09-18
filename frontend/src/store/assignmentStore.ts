@@ -18,7 +18,7 @@ interface AssignmentState {
   submitAssignment: (assignmentId: string, submission: Omit<AssignmentSubmission, 'id' | 'submittedAt'>) => Promise<void>;
   gradeSubmission: (submissionId: string, score: number, feedback: string) => Promise<void>;
   getAssignmentById: (id: string) => Assignment | null;
-  getStudentAssignments: (studentId: string) => Assignment[];
+  getStudentAssignments: () => Assignment[];
   getTeacherAssignments: (teacherId: string) => Assignment[];
   clearError: () => void;
 }
@@ -44,7 +44,7 @@ export const useAssignmentStore = create<AssignmentState>()(
           }
           
           set({ assignments: filteredAssignments, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to fetch assignments', isLoading: false });
         }
       },
@@ -68,7 +68,7 @@ export const useAssignmentStore = create<AssignmentState>()(
             assignments: [...assignments, newAssignment], 
             isLoading: false 
           });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to create assignment', isLoading: false });
         }
       },
@@ -86,7 +86,7 @@ export const useAssignmentStore = create<AssignmentState>()(
           );
           
           set({ assignments: updatedAssignments, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to update assignment', isLoading: false });
         }
       },
@@ -102,7 +102,7 @@ export const useAssignmentStore = create<AssignmentState>()(
           const filteredAssignments = assignments.filter(assignment => assignment.id !== id);
           
           set({ assignments: filteredAssignments, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to delete assignment', isLoading: false });
         }
       },
@@ -133,7 +133,7 @@ export const useAssignmentStore = create<AssignmentState>()(
             },
             isLoading: false
           });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to submit assignment', isLoading: false });
         }
       },
@@ -164,7 +164,7 @@ export const useAssignmentStore = create<AssignmentState>()(
           }
           
           set({ submissions: updatedSubmissions, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to grade submission', isLoading: false });
         }
       },
@@ -174,7 +174,7 @@ export const useAssignmentStore = create<AssignmentState>()(
         return assignments.find(assignment => assignment.id === id) || null;
       },
 
-      getStudentAssignments: (studentId) => {
+      getStudentAssignments: () => {
         const { assignments } = get();
         // In a real app, this would filter by student's class
         return assignments;

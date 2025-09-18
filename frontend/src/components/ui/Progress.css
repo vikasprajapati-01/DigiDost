@@ -1,0 +1,232 @@
+/* Progress component styles */
+
+/* Base progress container */
+.progressContainer {
+  width: 100%;
+}
+
+/* Label styles */
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+/* Progress bar container */
+.progressBar {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+/* Progress bar sizes */
+.progressBar.sm {
+  height: 0.5rem;
+}
+
+.progressBar.md {
+  height: 0.75rem;
+}
+
+.progressBar.lg {
+  height: 1rem;
+}
+
+/* Progress fill */
+.progressFill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+/* Progress fill colors */
+.progressFill.blue {
+  background-color: #2563eb;
+}
+
+.progressFill.green {
+  background-color: #16a34a;
+}
+
+.progressFill.purple {
+  background-color: #9333ea;
+}
+
+.progressFill.yellow {
+  background-color: #ca8a04;
+}
+
+.progressFill.red {
+  background-color: #dc2626;
+}
+
+/* Circular progress container */
+.circularProgressContainer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circularProgressSvg {
+  transform: rotate(-90deg);
+}
+
+.circularProgressLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circularProgressText {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* XP Progress styles */
+.xpProgressContainer {
+  width: 100%;
+}
+
+.xpProgressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.xpProgressLevel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.xpProgressXP {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.xpProgressBar {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.75rem;
+  overflow: hidden;
+}
+
+.xpProgressFill {
+  height: 100%;
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  border-radius: 9999px;
+}
+
+/* Streak Progress styles */
+.streakProgressContainer {
+  width: 100%;
+}
+
+.streakProgressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.streakProgressLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #c2410c;
+}
+
+.streakProgressCount {
+  font-size: 0.875rem;
+  color: #ea580c;
+}
+
+.streakProgressBar {
+  width: 100%;
+  background-color: #fed7aa;
+  border-radius: 9999px;
+  height: 0.75rem;
+  overflow: hidden;
+}
+
+.streakProgressFill {
+  height: 100%;
+  background: linear-gradient(to right, #fb923c, #ef4444);
+  border-radius: 9999px;
+}
+
+/* Step Progress styles */
+.stepProgressContainer {
+  width: 100%;
+}
+
+.stepProgressSteps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stepProgressStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepProgressStepCircle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.stepProgressStepCircle.completed {
+  background-color: #16a34a;
+  color: white;
+}
+
+.stepProgressStepCircle.current {
+  background-color: #2563eb;
+  color: white;
+}
+
+.stepProgressStepCircle.upcoming {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.stepProgressStepLabel {
+  font-size: 0.75rem;
+  color: #4b5563;
+  margin-top: 0.25rem;
+  text-align: center;
+  max-width: 5rem;
+}
+
+.stepProgressConnector {
+  flex: 1;
+  height: 0.25rem;
+  margin: 0 0.5rem;
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+}
+
+.stepProgressConnector.completed {
+  background-color: #16a34a;
+}
+
+.stepProgressConnector.upcoming {
+  background-color: #e5e7eb;
+}

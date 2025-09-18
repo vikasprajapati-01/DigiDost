@@ -27,11 +27,9 @@
   --color-contrast-medium: #374151;
   --color-contrast-low: #9ca3af;
   
-  /* Touch-friendly sizing */
   --touch-target: 44px;
   --border-radius: 8px;
   
-  /* Custom breakpoints for rural devices */
   --screen-xs: 360px;
   --screen-sm: 640px;
   --screen-md: 768px;
@@ -54,6 +52,8 @@
 /* Base styles for accessibility */
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
@@ -67,6 +67,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Focus styles for accessibility */
@@ -109,4 +111,41 @@ button, a, [role="button"] {
 
 .offline {
   filter: grayscale(1);
+}
+
+/* Glassmorphism support */
+.glass {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dark scrollbar for consistency */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Selection styles */
+::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: inherit;
 }

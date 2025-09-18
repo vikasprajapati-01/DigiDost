@@ -18,6 +18,7 @@ import { useCurrentUser, useAppStore } from '@/store';
 import { UserRole } from '@/types';
 import { ConnectionStatus } from '@/components/ui/ConnectionStatus';
 import { ROUTES } from '@/types/constants';
+import './Navigation.css';
 
 interface NavItem {
   name: string;
@@ -150,14 +151,14 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
       {/* Mobile menu button */}
       <button
         type="button"
-        className="fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-lg border border-gray-200 lg:hidden"
+        className="mobileMenuButton"
         onClick={() => setSidebarOpen(!sidebarOpen)}
         aria-label="Toggle navigation menu"
       >
         {sidebarOpen ? (
-          <XMarkIcon className="h-6 w-6 text-gray-600" />
+          <XMarkIcon className="mobileMenuIcon" />
         ) : (
-          <Bars3Icon className="h-6 w-6 text-gray-600" />
+          <Bars3Icon className="mobileMenuIcon" />
         )}
       </button>
 
@@ -167,7 +168,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="backdrop"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -184,37 +185,37 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
           damping: 30,
         }}
         className={cn(
-          'fixed top-0 left-0 z-40 h-full w-64 bg-white border-r border-gray-200 shadow-lg transform lg:transform-none lg:translate-x-0 lg:static lg:shadow-none',
+          'navigation',
+          sidebarOpen && 'open',
           className
         )}
       >
-        <div className="flex flex-col h-full">
+        <div className="navigationContent">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">DD</span>
+          <div className="navigationHeader">
+            <div className="logoContainer">
+              <div className="logo">
+                <span className="logoText">DD</span>
               </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">DigiDost</h2>
-                <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+              <div className="brandContainer">
+                <h2 className="brandTitle">DigiDost</h2>
+                <p className="userRole">{user.role}</p>
               </div>
             </div>
           </div>
 
           {/* Navigation items */}
-          <div className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+          <div className="navigationItems">
+            <ul className="navigationList">
             {navItems.map((item) => {
               const active = isActive(item.href);
               return (
+                <li key={item.name} className="navigationItem">
                 <Link
-                  key={item.name}
                   href={item.href}
                   className={cn(
-                    'flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors duration-200 relative',
-                    active
-                      ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    'navigationLink',
+                    active && 'active'
                   )}
                   onClick={() => {
                     // Close mobile menu when navigating
@@ -223,47 +224,44 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     }
                   }}
                 >
-                  <item.icon 
-                    className={cn(
-                      'w-5 h-5 mr-3 flex-shrink-0',
-                      active ? 'text-blue-600' : 'text-gray-400'
-                    )} 
-                  />
-                  <span className="flex-1">{item.name}</span>
+                  <item.icon className="navigationIcon" />
+                  <span className="navigationText">{item.name}</span>
                   {item.badge && (
-                    <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+                    <span className="navigationBadge">
                       {item.badge}
                     </span>
                   )}
                   {active && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-blue-600 rounded-r"
+                      className="activeIndicator"
                     />
                   )}
                 </Link>
+                </li>
               );
             })}
+            </ul>
           </div>
 
           {/* Settings link */}
-          <div className="p-3 border-t border-gray-200 space-y-3">
+          <div className="navigationFooter">
+            <div className="footerContent">
             <Link
               href="/settings"
               className={cn(
-                'flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors duration-200',
-                pathname === '/settings'
-                  ? 'bg-blue-50 text-blue-700'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                'settingsLink',
+                pathname === '/settings' && 'active'
               )}
             >
-              <CogIcon className="w-5 h-5 mr-3 text-gray-400" />
+              <CogIcon className="settingsIcon" />
               Settings
             </Link>
             
             {/* Connection Status */}
-            <div className="px-3 py-2">
+            <div className="connectionStatus">
               <ConnectionStatus />
+            </div>
             </div>
           </div>
         </div>

@@ -38,7 +38,7 @@ export const useTournamentStore = create<TournamentState>()(
           await new Promise(resolve => setTimeout(resolve, 500));
           
           set({ tournaments: mockTournaments, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to fetch tournaments', isLoading: false });
         }
       },
@@ -63,7 +63,7 @@ export const useTournamentStore = create<TournamentState>()(
             tournaments: [...tournaments, newTournament], 
             isLoading: false 
           });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to create tournament', isLoading: false });
         }
       },
@@ -148,7 +148,7 @@ export const useTournamentStore = create<TournamentState>()(
             userParticipations: updatedParticipations,
             isLoading: false,
           });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to leave tournament', isLoading: false });
         }
       },
@@ -214,7 +214,7 @@ export const useTournamentStore = create<TournamentState>()(
             userParticipations: updatedParticipations,
             isLoading: false,
           });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to submit tournament result', isLoading: false });
         }
       },

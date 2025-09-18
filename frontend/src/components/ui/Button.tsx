@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import './Button.css';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -64,38 +65,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const isDisabled = disabled || loading;
 
-    // Base classes
-    const baseClasses = 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed';
-
-    // Variant classes
-    const variantClasses = {
-      primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-sm',
-      secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500',
-      outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-blue-500',
-      ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
-      destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-sm',
-      success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 shadow-sm',
-      warning: 'bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500 shadow-sm',
-    };
-
-    // Size classes
-    const sizeClasses = {
-      sm: 'h-9 px-3 text-sm min-w-[36px]',
-      md: 'h-11 px-4 text-sm min-w-[44px]',
-      lg: 'h-12 px-6 text-base min-w-[48px]',
-      xl: 'h-14 px-8 text-lg min-w-[56px]',
-      icon: 'h-11 w-11 p-0',
-    };
-
-    // Width classes
-    const widthClasses = fullWidth ? 'w-full' : '';
-
     const finalClassName = cn(
-      baseClasses,
-      variantClasses[variant],
-      sizeClasses[size],
-      widthClasses,
-      loading && 'opacity-70 cursor-not-allowed',
+      'button',
+      variant,
+      size,
+      fullWidth && 'fullWidth',
+      loading && 'loading',
       className
     );
 
@@ -109,7 +84,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading && <LoadingSpinner size="sm" className="mr-2" />}
         {!loading && leftIcon && <span className="mr-2 flex-shrink-0">{leftIcon}</span>}
-        <span className="flex-1">{children}</span>
+        <span className="flex1">{children}</span>
         {!loading && rightIcon && <span className="ml-2 flex-shrink-0">{rightIcon}</span>}
       </button>
     );

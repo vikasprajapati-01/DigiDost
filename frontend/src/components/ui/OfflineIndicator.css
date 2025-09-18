@@ -1,0 +1,126 @@
+/* OfflineIndicator component styles */
+
+/* Offline indicator container */
+.offlineIndicator {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid;
+}
+
+/* Online state */
+.offlineIndicator.online {
+  background-color: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+/* Offline state */
+.offlineIndicator.offline {
+  background-color: #fefce8;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+/* Icon styles */
+.offlineIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.offlineIcon.online {
+  color: #16a34a;
+}
+
+.offlineIcon.offline {
+  color: #d97706;
+}
+
+/* Text content */
+.offlineContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.offlineTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.offlineDescription {
+  font-size: 0.75rem;
+}
+
+.offlineDescription.online {
+  color: #16a34a;
+}
+
+.offlineDescription.offline {
+  color: #d97706;
+}
+
+/* Connection Quality styles */
+.connectionQuality {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.connectionQuality.offline {
+  color: #ef4444;
+}
+
+.connectionQuality.slow {
+  color: #ef4444;
+}
+
+.connectionQuality.fair {
+  color: #eab308;
+}
+
+.connectionQuality.good {
+  color: #22c55e;
+}
+
+.connectionQuality.online {
+  color: #3b82f6;
+}
+
+/* Connection dot indicator */
+.connectionDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.connectionDot.offline {
+  background-color: #ef4444;
+}
+
+.connectionDot.slow {
+  background-color: #ef4444;
+}
+
+.connectionDot.fair {
+  background-color: #eab308;
+}
+
+.connectionDot.good {
+  background-color: #22c55e;
+}
+
+.connectionDot.online {
+  background-color: #3b82f6;
+}
+
+/* Connection label */
+.connectionLabel {
+  font-size: 0.75rem;
+}

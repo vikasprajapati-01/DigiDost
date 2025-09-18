@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import './OptimizedImage.css';
 
 interface OptimizedImageProps {
   src: string;
@@ -34,22 +36,22 @@ export function OptimizedImage({
   }, [priority]);
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={cn('imageContainer', className)}>
       {isLoading && !priority && (
         <div 
-          className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center"
+          className="imageLoading"
           style={{ width, height }}
         >
-          <div className="text-gray-400 text-sm">Loading...</div>
+          <div className="loadingText">Loading...</div>
         </div>
       )}
       
       {error ? (
         <div 
-          className="bg-gray-100 flex items-center justify-center text-gray-500"
+          className="imageError"
           style={{ width, height }}
         >
-          <span className="text-sm">Image unavailable</span>
+          <span className="errorText">Image unavailable</span>
         </div>
       ) : (
         <Image
@@ -65,9 +67,10 @@ export function OptimizedImage({
             setIsLoading(false);
             setError(true);
           }}
-          className={`transition-opacity duration-300 ${
-            isLoading ? 'opacity-0' : 'opacity-100'
-          }`}
+          className={cn(
+            'imageTransition',
+            isLoading ? 'imageLoading' : 'imageLoaded'
+          )}
           sizes="(max-width: 360px) 300px, (max-width: 640px) 400px, (max-width: 768px) 500px, 600px"
         />
       )}

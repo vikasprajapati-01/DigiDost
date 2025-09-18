@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { WifiIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
 import { useIsOnline } from '@/store';
+import './OfflineIndicator.css';
 
 interface OfflineIndicatorProps {
   className?: string;
@@ -40,10 +41,8 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({ className })
             damping: 30 
           }}
           className={cn(
-            'fixed top-4 right-4 z-50 flex items-center space-x-2 px-4 py-3 rounded-lg shadow-lg border',
-            isOnline 
-              ? 'bg-green-50 text-green-800 border-green-200' 
-              : 'bg-yellow-50 text-yellow-800 border-yellow-200',
+            'offlineIndicator',
+            isOnline ? 'online' : 'offline',
             className
           )}
           role="alert"
@@ -51,18 +50,18 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({ className })
         >
           {isOnline ? (
             <>
-              <WifiIcon className="w-5 h-5 text-green-600" />
-              <div>
-                <p className="text-sm font-medium">Back online!</p>
-                <p className="text-xs text-green-600">Data will sync automatically</p>
+              <WifiIcon className={cn('offlineIcon', 'online')} />
+              <div className="offlineContent">
+                <p className="offlineTitle">Back online!</p>
+                <p className={cn('offlineDescription', 'online')}>Data will sync automatically</p>
               </div>
             </>
           ) : (
             <>
-              <ExclamationTriangleIcon className="w-5 h-5 text-yellow-600" />
-              <div>
-                <p className="text-sm font-medium">You're offline</p>
-                <p className="text-xs text-yellow-600">Don't worry, you can still learn!</p>
+              <ExclamationTriangleIcon className={cn('offlineIcon', 'offline')} />
+              <div className="offlineContent">
+                <p className="offlineTitle">You're offline</p>
+                <p className={cn('offlineDescription', 'offline')}>Don't worry, you can still learn!</p>
               </div>
             </>
           )}
@@ -127,9 +126,9 @@ export const ConnectionQuality: React.FC<ConnectionQualityProps> = ({ className 
 
   if (!isOnline) {
     return (
-      <div className={cn('flex items-center space-x-1 text-red-500', className)}>
-        <div className="w-2 h-2 rounded-full bg-red-500"></div>
-        <span className="text-xs">Offline</span>
+      <div className={cn('connectionQuality', 'offline', className)}>
+        <div className={cn('connectionDot', 'offline')}></div>
+        <span className="connectionLabel">Offline</span>
       </div>
     );
   }
@@ -138,22 +137,22 @@ export const ConnectionQuality: React.FC<ConnectionQualityProps> = ({ className 
     switch (type) {
       case 'slow-2g':
       case '2g':
-        return { color: 'text-red-500', bg: 'bg-red-500', label: 'Slow' };
+        return { variant: 'slow', label: 'Slow' };
       case '3g':
-        return { color: 'text-yellow-500', bg: 'bg-yellow-500', label: 'Fair' };
+        return { variant: 'fair', label: 'Fair' };
       case '4g':
-        return { color: 'text-green-500', bg: 'bg-green-500', label: 'Good' };
+        return { variant: 'good', label: 'Good' };
       default:
-        return { color: 'text-blue-500', bg: 'bg-blue-500', label: 'Online' };
+        return { variant: 'online', label: 'Online' };
     }
   };
 
   const quality = getQualityInfo(connectionType);
 
   return (
-    <div className={cn('flex items-center space-x-1', quality.color, className)}>
-      <div className={cn('w-2 h-2 rounded-full', quality.bg)}></div>
-      <span className="text-xs">{quality.label}</span>
+    <div className={cn('connectionQuality', quality.variant, className)}>
+      <div className={cn('connectionDot', quality.variant)}></div>
+      <span className="connectionLabel">{quality.label}</span>
     </div>
   );
 };

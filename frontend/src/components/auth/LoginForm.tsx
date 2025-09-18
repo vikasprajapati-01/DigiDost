@@ -1,13 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
-import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
 import { LoadingButton } from '@/components/ui/Loading';
 import type { UserRole } from '@/types';
+import './LoginForm.css';
 
 interface LoginFormData {
   email: string;
@@ -79,9 +77,9 @@ export function LoginForm() {
   };
 
   const demoAccounts = [
-    { role: 'student' as UserRole, email: 'student@school.edu', name: 'Student Demo' },
-    { role: 'teacher' as UserRole, email: 'teacher@school.edu', name: 'Teacher Demo' },
-    { role: 'principal' as UserRole, email: 'principal@school.edu', name: 'Principal Demo' }
+    { role: 'student' as UserRole, email: 'student@demo.com', label: 'Student Demo' },
+    { role: 'teacher' as UserRole, email: 'teacher@demo.com', label: 'Teacher Demo' },
+    { role: 'principal' as UserRole, email: 'principal@demo.com', label: 'Principal Demo' }
   ];
 
   const fillDemoAccount = (demo: typeof demoAccounts[0]) => {
@@ -94,118 +92,121 @@ export function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-green-50">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
-      >
-        <Card className="p-6 space-y-6 bg-white">
+    <div className="loginContainer">
+      <div className="loginWrapper">
+        {/* Main Login Card */}
+        <div className="loginCard">
           {/* Header */}
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              Welcome to DigiDost
-            </h1>
-            <p className="text-gray-700 dark:text-gray-300">
-              Rural Education Gamification Platform
-            </p>
+          <div className="loginHeader">
+            <div className="loginIcon">
+              <svg className="loginIconSvg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h1 className="loginTitle">DigiDost</h1>
+            <p className="loginSubtitle">Rural Education Platform</p>
           </div>
 
-          {/* Demo Accounts */}
-          <div className="space-y-3">
-            <p className="text-sm text-gray-700 dark:text-gray-300 text-center font-medium">Quick Demo Access:</p>
-            <div className="grid gap-2">
-              {demoAccounts.map((demo) => (
-                <Button
-                  key={demo.role}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => fillDemoAccount(demo)}
-                  className="justify-start text-gray-800 dark:text-gray-200 border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+          {/* Form Content */}
+          <div className="loginContent">
+            {/* Demo Accounts */}
+            <div className="demoSection">
+              <h3 className="demoTitle">Quick Demo Access</h3>
+              <div className="demoGrid">
+                {demoAccounts.map((demo) => (
+                  <button
+                    key={demo.role}
+                    onClick={() => fillDemoAccount(demo)}
+                    className="demoButton"
+                  >
+                    <div className="demoButtonIcon">
+                      {demo.role === 'student' ? '👨‍🎓' : demo.role === 'teacher' ? '👩‍🏫' : '👨‍💼'}
+                    </div>
+                    {demo.label}
+                  </button>
+                ))}
+              </div>
+              <p className="demoPassword">Password: demo123</p>
+            </div>
+
+            {/* Login Form */}
+            <form onSubmit={handleSubmit} className="loginForm">
+              {/* Role Selection */}
+              <div className="formGroup">
+                <label className="formLabel">
+                  I am a
+                </label>
+                <select
+                  value={formData.role}
+                  onChange={(e) => handleInputChange('role', e.target.value as UserRole)}
+                  className="formSelect"
                 >
-                  <span className="capitalize">{demo.name}</span>
-                </Button>
-              ))}
-            </div>
-          </div>
+                  <option value="student">Student</option>
+                  <option value="teacher">Teacher</option>
+                  <option value="principal">Principal</option>
+                </select>
+              </div>
 
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Role Selection */}
-            <div className="space-y-2">
-              <label htmlFor="role" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
-                I am a:
-              </label>
-              <select
-                id="role"
-                value={formData.role}
-                onChange={(e) => handleInputChange('role', e.target.value as UserRole)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600"
+              {/* Email */}
+              <div className="formGroup">
+                <label className="formLabel">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  placeholder="Enter your email"
+                  className={`formInput ${errors.email ? 'error' : ''}`}
+                />
+                {errors.email && (
+                  <p className="errorMessage">{errors.email}</p>
+                )}
+              </div>
+
+              {/* Password */}
+              <div className="formGroup">
+                <label className="formLabel">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  placeholder="Enter your password"
+                  className={`formInput ${errors.password ? 'error' : ''}`}
+                />
+                {errors.password && (
+                  <p className="errorMessage">{errors.password}</p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="submitButton"
               >
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-                <option value="principal">Principal</option>
-              </select>
-            </div>
-
-            {/* Email Input */}
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 ${
-                  errors.email ? 'border-red-300' : 'border-gray-300'
-                }`}
-                placeholder="Enter your email"
-              />
-              {errors.email && (
-                <p className="text-sm text-red-600 dark:text-red-400">{errors.email}</p>
-              )}
-            </div>
-
-            {/* Password Input */}
-            <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={formData.password}
-                onChange={(e) => handleInputChange('password', e.target.value)}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 ${
-                  errors.password ? 'border-red-300' : 'border-gray-300'
-                }`}
-                placeholder="Enter your password"
-              />
-              {errors.password && (
-                <p className="text-sm text-red-600 dark:text-red-400">{errors.password}</p>
-              )}
-            </div>
-
-            {/* Submit Button */}
-            <LoadingButton
-              type="submit"
-              loading={isLoading}
-              disabled={isLoading}
-              className="w-full"
-            >
-              Sign In
-            </LoadingButton>
-          </form>
-
-          {/* Footer */}
-          <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>Demo credentials: Any email with password "demo123"</p>
+                {isLoading ? (
+                  <div className="loading">
+                    <div className="loadingSpinner"></div>
+                    Signing In...
+                  </div>
+                ) : (
+                  'Sign In'
+                )}
+              </button>
+            </form>
           </div>
-        </Card>
-      </motion.div>
+        </div>
+
+        {/* Footer */}
+        <div className="loginFooter">
+          <p className="footerText">
+            Empowering rural education through technology
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

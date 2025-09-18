@@ -262,7 +262,7 @@ export interface LessonContent {
 export interface InteractiveElement {
   id: string;
   type: 'animation' | 'simulation' | 'drag-drop' | 'click-reveal';
-  content: any;
+  content: Record<string, unknown>;
   instructions: string;
 }
 
@@ -544,7 +544,7 @@ export interface FilterOptions {
 export interface OfflineAction {
   id: string;
   type: string;
-  payload: any;
+  payload: Record<string, unknown>;
   timestamp: Date;
   retryCount: number;
   maxRetries: number;
@@ -575,7 +575,7 @@ export interface DashboardWidget {
   id: string;
   type: 'chart' | 'metric' | 'list' | 'progress';
   title: string;
-  data: any;
+  data: Record<string, unknown>;
   size: 'small' | 'medium' | 'large';
   position: { x: number; y: number };
   refreshInterval?: number;
