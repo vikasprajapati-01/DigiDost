@@ -13,7 +13,7 @@ interface AssignmentData {
   type: "homework" | "project" | "quiz" | "exam";
   difficulty: "easy" | "medium" | "hard";
   points: string;
-  instructions: string;
+  instructions?: string;
 }
 
 interface AssignmentFormProps {
