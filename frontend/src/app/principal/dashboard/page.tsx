@@ -3,7 +3,6 @@
 import { PrincipalOnlyRoute } from '@/components/auth/RoleBasedRedirect';
 import { Navigation } from '@/components/layout/Navigation';
 import { LogoutButton } from '@/components/auth/LogoutButton';
-import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Progress } from '@/components/ui/Progress';
 import { useAuthStore } from '@/store/authStore';

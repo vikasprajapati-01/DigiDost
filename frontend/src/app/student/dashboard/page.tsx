@@ -19,7 +19,6 @@ export default function StudentDashboard() {
     coins, 
     currentStreak, 
     weeklyXP, 
-    badges, 
     achievements,
     getXPForNextLevel,
     getProgressToNextLevel
@@ -235,7 +234,7 @@ export default function StudentDashboard() {
 
                 {/* Weekly Goals */}
                 <Card className="goalsCard">
-                  <h3 className="sectionTitle">📊 This Week's Goals</h3>
+                  <h3 className="sectionTitle">📊 This Week&apos;s Goals</h3>
                   <div className="space-y-3">
                     <div className="goalItem">
                       <div>

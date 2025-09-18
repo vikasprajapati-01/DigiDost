@@ -4,14 +4,24 @@ import { useState } from 'react';
 import { TeacherOnlyRoute } from '@/components/auth/RoleBasedRedirect';
 import { Navigation } from '@/components/layout/Navigation';
 import { LogoutButton } from '@/components/auth/LogoutButton';
-import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { Progress } from '@/components/ui/Progress';
 import { AssignmentForm } from '@/components/forms/AssignmentForm';
 import { useAuthStore } from '@/store/authStore';
 import { useAssignmentStore } from '@/store/assignmentStore';
 import { motion } from 'framer-motion';
 import './TeacherDashboard.css';
+
+interface AssignmentFormData {
+  title: string;
+  description: string;
+  subject: string;
+  dueDate: string;
+  dueTime: string;
+  type: "homework" | "project" | "quiz" | "exam";
+  difficulty: "easy" | "medium" | "hard";
+  points: string;
+  instructions?: string;
+}
 
 export default function TeacherDashboard() {
   const { user } = useAuthStore();
@@ -21,9 +31,8 @@ export default function TeacherDashboard() {
   // Calculate stats
   const totalAssignments = assignments.length;
   const pendingAssignments = assignments.filter(a => a.status === 'published').length;
-  const completedAssignments = assignments.filter(a => a.status === 'closed').length;
 
-  const handleCreateAssignment = (assignmentData: any) => {
+  const handleCreateAssignment = (assignmentData: AssignmentFormData) => {
     createAssignment({
       title: assignmentData.title,
       description: assignmentData.description,
