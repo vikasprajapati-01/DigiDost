@@ -3,6 +3,18 @@
 import { useState, useEffect } from 'react';
 import { Badge } from './Badge';
 
+interface NetworkConnection extends EventTarget {
+  effectiveType?: string;
+  downlink?: number;
+  rtt?: number;
+  addEventListener(type: 'change', listener: () => void): void;
+  removeEventListener(type: 'change', listener: () => void): void;
+}
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: NetworkConnection;
+}
+
 interface ConnectionInfo {
   isOnline: boolean;
   effectiveType?: string;
@@ -15,16 +27,16 @@ export function ConnectionStatus() {
 
   useEffect(() => {
     const updateConnection = () => {
-      const navigator = window.navigator as any;
+      const navigator = window.navigator as NavigatorWithConnection;
       const connectionInfo: ConnectionInfo = {
         isOnline: navigator.onLine,
       };
 
       if ('connection' in navigator) {
         const conn = navigator.connection;
-        connectionInfo.effectiveType = conn.effectiveType;
-        connectionInfo.downlink = conn.downlink;
-        connectionInfo.rtt = conn.rtt;
+        connectionInfo.effectiveType = conn?.effectiveType;
+        connectionInfo.downlink = conn?.downlink;
+        connectionInfo.rtt = conn?.rtt;
       }
 
       setConnection(connectionInfo);
@@ -36,14 +48,14 @@ export function ConnectionStatus() {
     window.addEventListener('offline', updateConnection);
 
     if ('connection' in navigator && navigator.connection) {
-      (navigator.connection as any).addEventListener('change', updateConnection);
+      (navigator.connection as NetworkConnection).addEventListener('change', updateConnection);
     }
 
     return () => {
       window.removeEventListener('online', updateConnection);
       window.removeEventListener('offline', updateConnection);
       if ('connection' in navigator && navigator.connection) {
-        (navigator.connection as any).removeEventListener('change', updateConnection);
+        (navigator.connection as NetworkConnection).removeEventListener('change', updateConnection);
       }
     };
   }, []);

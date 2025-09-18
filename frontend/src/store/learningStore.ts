@@ -34,7 +34,7 @@ interface LearningState {
   getSubjectProgress: (subjectId: string) => number;
   getChapterProgress: (chapterId: string) => number;
   getLessonProgress: (lessonId: string) => LearningProgress | null;
-  getRecommendedLessons: (studentId: string) => Lesson[];
+  getRecommendedLessons: (_studentId: string) => Lesson[];
   searchContent: (query: string) => (Lesson | Chapter | Subject)[];
   clearError: () => void;
 }
@@ -60,7 +60,7 @@ export const useLearningStore = create<LearningState>()(
           
           const filteredSubjects = mockSubjects.filter(subject => subject.grade === grade);
           set({ subjects: filteredSubjects, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to fetch subjects', isLoading: false });
         }
       },
@@ -74,7 +74,7 @@ export const useLearningStore = create<LearningState>()(
           
           const filteredChapters = mockChapters.filter(chapter => chapter.subjectId === subjectId);
           set({ chapters: filteredChapters, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to fetch chapters', isLoading: false });
         }
       },
@@ -88,7 +88,7 @@ export const useLearningStore = create<LearningState>()(
           
           const filteredLessons = mockLessons.filter(lesson => lesson.chapterId === chapterId);
           set({ lessons: filteredLessons, isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to fetch lessons', isLoading: false });
         }
       },
@@ -163,7 +163,7 @@ export const useLearningStore = create<LearningState>()(
           
           // Award XP and coins (in real app, this would be handled by game store)
           console.log(`Lesson completed! +${50} XP, +${5} coins`);
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to complete lesson', isLoading: false });
         }
       },
@@ -200,7 +200,7 @@ export const useLearningStore = create<LearningState>()(
           console.log(`Quiz completed! Score: ${score}, Time: ${timeSpent}s`);
           
           set({ isLoading: false });
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to submit quiz result', isLoading: false });
         }
       },
@@ -242,7 +242,7 @@ export const useLearningStore = create<LearningState>()(
         return progress[lessonId] || null;
       },
 
-      getRecommendedLessons: (studentId: string) => {
+      getRecommendedLessons: (_studentId: string) => {
         const { lessons, progress } = get();
         
         // Return lessons that are not completed, ordered by difficulty

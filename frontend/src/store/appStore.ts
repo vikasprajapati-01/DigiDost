@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Notification } from '@/types';
 import { mockNotifications } from '@/data/mockData';
-import { STORAGE_KEYS, THEMES, LANGUAGES } from '@/types/constants';
+import { STORAGE_KEYS } from '@/types/constants';
 
 interface AppState {
   // UI State

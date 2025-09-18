@@ -74,7 +74,7 @@ export const useAuthStore = create<AuthState>()(
           });
           
           return true;
-        } catch (error) {
+        } catch {
           set({ 
             error: 'Login failed. Please check your credentials.', 
             isLoading: false 

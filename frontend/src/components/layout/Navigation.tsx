@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   HomeIcon, 
@@ -104,7 +104,6 @@ interface NavigationProps {
 export const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const user = useCurrentUser();
   const { sidebarOpen, setSidebarOpen } = useAppStore();
-  const router = useRouter();
   const pathname = usePathname();
 
   if (!user) return null;

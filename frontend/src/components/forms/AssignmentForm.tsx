@@ -3,12 +3,23 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
+
+interface AssignmentData {
+  title: string;
+  description: string;
+  subject: string;
+  dueDate: string;
+  dueTime: string;
+  type: string;
+  difficulty: string;
+  points: string;
+  instructions: string;
+}
 
 interface AssignmentFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (assignment: any) => void;
+  onSubmit: (assignment: AssignmentData) => void;
 }
 
 export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProps) {

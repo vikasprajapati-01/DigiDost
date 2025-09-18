@@ -5,6 +5,18 @@ import { cn } from '@/lib/utils';
 import { useIsOnline } from '@/store';
 import './OfflineIndicator.css';
 
+interface NetworkConnection extends EventTarget {
+  effectiveType?: string;
+  addEventListener(type: 'change', listener: () => void): void;
+  removeEventListener(type: 'change', listener: () => void): void;
+}
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: NetworkConnection;
+  mozConnection?: NetworkConnection;
+  webkitConnection?: NetworkConnection;
+}
+
 interface OfflineIndicatorProps {
   className?: string;
 }
@@ -60,8 +72,8 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({ className })
             <>
               <ExclamationTriangleIcon className={cn('offlineIcon', 'offline')} />
               <div className="offlineContent">
-                <p className="offlineTitle">You're offline</p>
-                <p className={cn('offlineDescription', 'offline')}>Don't worry, you can still learn!</p>
+                <p className="offlineTitle">You&apos;re offline</p>
+                <p className={cn('offlineDescription', 'offline')}>Don&apos;t worry, you can still learn!</p>
               </div>
             </>
           )}
@@ -77,13 +89,15 @@ export const useNetworkStatus = () => {
   const [connectionType, setConnectionType] = useState<string>('unknown');
 
   useEffect(() => {
-    // Check initial status
-    setIsOnline(navigator.onLine);
-
     // Get connection info if available
-    const connection = (navigator as any).connection || 
-                      (navigator as any).mozConnection || 
-                      (navigator as any).webkitConnection;
+    const navigatorRef = window.navigator as NavigatorWithConnection;
+    
+    // Check initial status
+    setIsOnline(navigatorRef.onLine);
+
+    const connection = navigatorRef.connection || 
+                      navigatorRef.mozConnection || 
+                      navigatorRef.webkitConnection;
     
     if (connection) {
       setConnectionType(connection.effectiveType || 'unknown');

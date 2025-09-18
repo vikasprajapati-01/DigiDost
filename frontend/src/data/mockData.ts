@@ -1,7 +1,7 @@
 import { 
   Student, Teacher, Principal, Class, Assignment, Subject, 
   Chapter, Lesson, Tournament, Badge, Achievement, Quiz,
-  Question, Notification, School, AssignmentSubmission
+  Notification, School
 } from '@/types';
 
 // Mock School Data

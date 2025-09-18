@@ -1,6 +1,18 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+// Define Battery API types
+interface BatteryManager {
+  level: number;
+  charging: boolean;
+  chargingTime: number;
+  dischargingTime: number;
+}
+
+interface NavigatorWithBattery extends Navigator {
+  getBattery?: () => Promise<BatteryManager>;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -50,7 +62,7 @@ export function formatFileSize(bytes: number): string {
 }
 
 // Debounce function
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -63,7 +75,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // Throttle function
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -212,8 +224,9 @@ export async function getBatteryLevel(): Promise<number | null> {
   }
   
   try {
-    const battery = await (navigator as any).getBattery();
-    return Math.round(battery.level * 100);
+    const navigatorWithBattery = navigator as NavigatorWithBattery;
+    const battery = await navigatorWithBattery.getBattery?.();
+    return battery ? Math.round(battery.level * 100) : null;
   } catch {
     return null;
   }

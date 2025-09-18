@@ -131,11 +131,10 @@ export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
 };
 
 // Button loading state
-interface LoadingButtonProps {
+interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   children: React.ReactNode;
   className?: string;
-  [key: string]: any;
 }
 
 export const LoadingButton: React.FC<LoadingButtonProps> = ({
