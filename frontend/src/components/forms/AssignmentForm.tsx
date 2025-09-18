@@ -77,6 +77,7 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
     e.preventDefault();
     if (validateForm()) {
       // Extract only the assignment data without attachments
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { attachments: _, ...assignmentData } = formData;
       onSubmit(assignmentData);
       onClose();
