@@ -10,8 +10,8 @@ interface AssignmentData {
   subject: string;
   dueDate: string;
   dueTime: string;
-  type: string;
-  difficulty: string;
+  type: "homework" | "project" | "quiz" | "exam";
+  difficulty: "easy" | "medium" | "hard";
   points: string;
   instructions: string;
 }
@@ -23,14 +23,14 @@ interface AssignmentFormProps {
 }
 
 export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<AssignmentData & { attachments: File[] }>({
     title: '',
     description: '',
     subject: '',
     dueDate: '',
     dueTime: '',
-    type: 'homework',
-    difficulty: 'medium',
+    type: 'homework' as const,
+    difficulty: 'medium' as const,
     points: '',
     instructions: '',
     attachments: [] as File[],
@@ -38,7 +38,7 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: keyof (AssignmentData & { attachments: File[] }), value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
@@ -62,7 +62,9 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
+      // Extract only the assignment data without attachments
+      const { attachments, ...assignmentData } = formData;
+      onSubmit(assignmentData);
       onClose();
       setFormData({
         title: '',
@@ -70,8 +72,8 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
         subject: '',
         dueDate: '',
         dueTime: '',
-        type: 'homework',
-        difficulty: 'medium',
+        type: 'homework' as const,
+        difficulty: 'medium' as const,
         points: '',
         instructions: '',
         attachments: [],
@@ -177,10 +179,9 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
                     className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg bg-white focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:border-gray-400 transition-all duration-200"
                   >
                     <option value="homework">Homework</option>
-                    <option value="quiz">Quiz</option>
-                    <option value="test">Test</option>
                     <option value="project">Project</option>
-                    <option value="exercise">Exercise</option>
+                    <option value="quiz">Quiz</option>
+                    <option value="exam">Exam</option>
                   </select>
                 </div>
               </div>
