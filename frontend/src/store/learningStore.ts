@@ -34,7 +34,7 @@ interface LearningState {
   getSubjectProgress: (subjectId: string) => number;
   getChapterProgress: (chapterId: string) => number;
   getLessonProgress: (lessonId: string) => LearningProgress | null;
-  getRecommendedLessons: (_studentId: string) => Lesson[];
+  getRecommendedLessons: () => Lesson[];
   searchContent: (query: string) => (Lesson | Chapter | Subject)[];
   clearError: () => void;
 }
@@ -242,7 +242,7 @@ export const useLearningStore = create<LearningState>()(
         return progress[lessonId] || null;
       },
 
-      getRecommendedLessons: (_studentId: string) => {
+      getRecommendedLessons: () => {
         const { lessons, progress } = get();
         
         // Return lessons that are not completed, ordered by difficulty

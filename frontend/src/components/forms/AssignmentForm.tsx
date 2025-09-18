@@ -29,8 +29,8 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
     subject: '',
     dueDate: '',
     dueTime: '',
-    type: 'homework' as const,
-    difficulty: 'medium' as const,
+    type: 'homework',
+    difficulty: 'medium',
     points: '',
     instructions: '',
     attachments: [] as File[],
@@ -42,6 +42,20 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const handleTypeChange = (value: AssignmentData['type']) => {
+    setFormData(prev => ({ ...prev, type: value }));
+    if (errors.type) {
+      setErrors(prev => ({ ...prev, type: '' }));
+    }
+  };
+
+  const handleDifficultyChange = (value: AssignmentData['difficulty']) => {
+    setFormData(prev => ({ ...prev, difficulty: value }));
+    if (errors.difficulty) {
+      setErrors(prev => ({ ...prev, difficulty: '' }));
     }
   };
 
@@ -63,7 +77,7 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
     e.preventDefault();
     if (validateForm()) {
       // Extract only the assignment data without attachments
-      const { attachments, ...assignmentData } = formData;
+      const { attachments: _, ...assignmentData } = formData;
       onSubmit(assignmentData);
       onClose();
       setFormData({
@@ -72,8 +86,8 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
         subject: '',
         dueDate: '',
         dueTime: '',
-        type: 'homework' as const,
-        difficulty: 'medium' as const,
+        type: 'homework',
+        difficulty: 'medium',
         points: '',
         instructions: '',
         attachments: [],
@@ -175,7 +189,7 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
                   </label>
                   <select
                     value={formData.type}
-                    onChange={(e) => handleInputChange('type', e.target.value)}
+                    onChange={(e) => handleTypeChange(e.target.value as AssignmentData['type'])}
                     className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg bg-white focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:border-gray-400 transition-all duration-200"
                   >
                     <option value="homework">Homework</option>
@@ -304,7 +318,7 @@ export function AssignmentForm({ isOpen, onClose, onSubmit }: AssignmentFormProp
                         name="difficulty"
                         value={difficulty.value}
                         checked={formData.difficulty === difficulty.value}
-                        onChange={(e) => handleInputChange('difficulty', e.target.value)}
+                        onChange={(e) => handleDifficultyChange(e.target.value as AssignmentData['difficulty'])}
                         className="sr-only"
                       />
                       <div className={`px-4 py-2 rounded-lg border-2 transition-all ${
