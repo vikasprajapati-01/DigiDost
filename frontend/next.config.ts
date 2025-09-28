@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
   
   /* Performance optimizations for low-bandwidth */
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // Temporarily disabled due to critters module issue
     optimizePackageImports: ['react-icons', 'lucide-react', 'framer-motion'],
   },
   
