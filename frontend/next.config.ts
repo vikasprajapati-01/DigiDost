@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const nextConfig: NextConfig = {
   /* PWA Configuration for offline support */
@@ -9,10 +8,6 @@ const nextConfig: NextConfig = {
     deviceSizes: [360, 640, 768, 1024, 1280],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  
-  /* Output file tracing configuration to silence workspace warnings */
-  output: 'standalone',
-  outputFileTracingRoot: path.join(__dirname, '../../'),
   
   /* Performance optimizations for low-bandwidth */
   experimental: {
